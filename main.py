@@ -5,7 +5,7 @@ import turtle
 from PIL import ImageGrab
 import os
 from functools import partial
-from tkinter import ttk, PhotoImage, font, filedialog
+from tkinter import ttk, font
 
 root = Tk()
 root.geometry('1350x850')
@@ -22,7 +22,7 @@ root.config(menu=main_menu)
 
 
 def browseFiles(filename):
-    with open(filename, 'r') as f:
+    with open(f"saving/{filename}", 'r') as f:
         data = f.readline()
     data = eval(data)
     dop_pr.append(data["Доп. правила"])
@@ -53,11 +53,12 @@ def save_setting():
     save_param["Рисовать"] = draw_line[-1]
     save_param["Вперед"] = ahead[-1]
     save_param["Название"] = input_name.get()
-    with open(f"{input_name.get()}.txt", 'w') as f:
+    with open(f"saving/{input_name.get()}.txt", 'w') as f:
         f.write(f'{save_param}')
     file_menu_info.delete(0, END)
     file_menu_info_2.delete(0, END)
-    all_files = os.listdir("C:/Users/griba/MainProject")
+    path = os.path.join(os.getcwd(), 'saving')
+    all_files = os.listdir(path)
     for i in all_files:
         if i[-4:] == '.txt':
             if "SOL" in i:
@@ -406,7 +407,8 @@ def draw_beautiful_tree_2():
 file_menu_info = Menu(main_menu, tearoff=0)
 file_menu_info_2 = Menu(main_menu, tearoff=0)
 
-all_files = os.listdir("C:/Users/griba/MainProject")
+path = os.path.join(os.getcwd(), 'saving')
+all_files = os.listdir(path)
 for i in all_files:
     if i[-4:] == '.txt':
         if "SOL" in i:
